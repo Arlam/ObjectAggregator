@@ -1,0 +1,19 @@
+{
+  "inputRecords": [
+    {"event": {"pk": ["PrincipalId=123"], "table":  "Principal"}, "stateRecord": {"PrincipalId":  "123", "Login":  "saaam"}},
+    {"event": {"pk": ["ProviderGroupId=2"], "table":  "ProviderGroup"}, "stateRecord": {"ProviderGroupId":  2, "Name":  "WHN Clinic"}},
+    {"event": {"pk": ["PhysicianId=1","PhysicianOrganizationId=10"], "table":  "PhysicianPhysicianOrganization"}, "stateRecord": {"PhysicianId":  "1", "PhysicianOrganizationId": "10"}},
+    {"event": {"pk": ["PhysicianId=1","PhysicianOrganizationId=11"], "table":  "PhysicianPhysicianOrganization"}, "stateRecord": {"PhysicianId":  "1", "PhysicianOrganizationId": "11"}},
+    {"event": {"pk": ["PhysicianId=2","PhysicianOrganizationId=10"], "table":  "PhysicianPhysicianOrganization"}, "stateRecord": {"PhysicianId":  "2", "PhysicianOrganizationId": "10"}},
+    {"event": {"pk": ["Id=10"], "table":  "PhysicianOrganization"}, "stateRecord": {"Id":  "10", "Name":  "Dr. Pauls ORG"}},
+    {"event": {"pk": ["PhysicianId=1"], "table":  "Physician"}, "stateRecord": {"PhysicianId":  "1", "FirstName":  "Sam", "PrincipalId": 123, "ProviderGroupId":  "2"}},
+    {"event": {"pk": ["PhysicianId=2"], "table":  "Physician"}, "stateRecord": {"PhysicianId":  "2", "FirstName":  "Jack", "PrincipalId": null, "ProviderGroupId":  "3"}},
+    {"event": {"pk": ["Id=10"], "table":  "PhysicianOrganization"}, "stateRecord": {"Id":  "10", "Name":  "Dr. Pauls ORG!!!"}}
+  ],
+  "expectedOutput": [
+    {"FirstName":"Sam","PhysicianId":"1","PhysicianPhysicianOrganization":[{"PhysicianId":"1","PhysicianOrganizationId":"11"},{"PhysicianId":"1","PhysicianOrganization":{"Id":"10","Name":"Dr. Pauls ORG"},"PhysicianOrganizationId":"10"}],"Principal":{"Login":"saaam","PrincipalId":"123"},"PrincipalId":123,"ProviderGroup":{"Name":"WHN Clinic","ProviderGroupId":2},"ProviderGroupId":"2","Root":"Physician"},
+    {"FirstName":"Jack","PhysicianId":"2","PhysicianPhysicianOrganization":[{"PhysicianId":"2","PhysicianOrganization":{"Id":"10","Name":"Dr. Pauls ORG"},"PhysicianOrganizationId":"10"}],"PrincipalId":null,"ProviderGroupId":"3","Root":"Physician"},
+    {"FirstName":"Jack","PhysicianId":"2","PhysicianPhysicianOrganization":[{"PhysicianId":"2","PhysicianOrganization":{"Id":"10","Name":"Dr. Pauls ORG!!!"},"PhysicianOrganizationId":"10"}],"PrincipalId":null,"ProviderGroupId":"3","Root":"Physician"},
+    {"FirstName":"Sam","PhysicianId":"1","PhysicianPhysicianOrganization":[{"PhysicianId":"1","PhysicianOrganizationId":"11"},{"PhysicianId":"1","PhysicianOrganization":{"Id":"10","Name":"Dr. Pauls ORG!!!"},"PhysicianOrganizationId":"10"}],"Principal":{"Login":"saaam","PrincipalId":"123"},"PrincipalId":123,"ProviderGroup":{"Name":"WHN Clinic","ProviderGroupId":2},"ProviderGroupId":"2","Root":"Physician"}
+  ]
+}

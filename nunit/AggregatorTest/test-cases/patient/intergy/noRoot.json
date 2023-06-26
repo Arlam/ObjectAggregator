@@ -1,0 +1,7 @@
+{
+  "inputRecords": [
+    {"event": {"pk": ["Id=678"], "table":  "Address"}, "stateRecord": {"Id":  "678", "PersonId":  "456", "Discriminator":  "Patient", "City":  "Kyiv"}},
+    {"event": {"pk": ["Id=789"], "table":  "ContactInfo"}, "stateRecord": {"Id":  "789", "PatientId": "456", "Email":  "test@org.com"}}
+  ],
+  "expectedOutput": []
+}

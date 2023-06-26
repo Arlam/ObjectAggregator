@@ -23,5 +23,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Aggregator\Aggregator.csproj" />
   </ItemGroup>
-
+  <ItemGroup>
+    <Content Include=".\test-cases\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

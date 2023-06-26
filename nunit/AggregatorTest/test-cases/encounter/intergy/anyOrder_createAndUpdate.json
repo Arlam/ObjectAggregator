@@ -1,0 +1,57 @@
+{
+  "inputRecords": [
+    {"event": {"pk": ["Id=3"], "table":  "PatientEncounterDiagnosisDetail"}, "stateRecord": {"Id":  "3", "PatientEncounterDiagnosisId":  "2", "Description":  "Diabetes - no complications"}},
+    {"event": {"pk": ["Id=22"], "table":  "PatientEncounterDiagnosis"}, "stateRecord": {"Id":  "22", "PatientEncounterId": "1", "Code":  "ICD9:250.02"}},
+    {"event": {"pk": ["Id=33"], "table":  "PatientEncounterDiagnosisDetail"}, "stateRecord": {"Id":  "33", "PatientEncounterDiagnosisId":  "22", "Description":  "Diabetes - with hyperglycemia"}},
+    {"event": {"pk": ["Id=2"], "table":  "PatientEncounterDiagnosis"}, "stateRecord": {"Id":  "2", "PatientEncounterId": "1", "Code":  "ICD9:250.01"}},
+    {"event": {"pk": ["Id=22"], "table":  "PatientEncounterDetail"}, "stateRecord": {"Id":  "22", "ProviderNPI":  "123456789"}},
+    {"event": {"pk": ["Id=4"], "table":  "PatientEncounterDiagnosisDetail"}, "stateRecord": {"Id":  "4", "PatientEncounterDiagnosisId":  "2", "Description":  "Diabetes - no complications indeed"}},
+    /* ROOT - one event shall be created */
+    {"event": {"pk": ["Id=1"], "table":  "PatientEncounter"}, "stateRecord": {"Id":  "1", "PatientId": "88", "PatientEncounterDetailId":  "22", "DatePerformed": "2012-01-31"}},
+    /* simple update in the depth */
+    {"event": {"pk": ["Id=33"], "table":  "PatientEncounterDiagnosisDetail"}, "stateRecord": {"Id":  "33", "PatientEncounterDiagnosisId":  "22", "Description":  "Diabetes - with hyperglycemia - UPDATED"}}
+  ],
+  "expectedOutput": [
+
+    {
+      "Root": "PatientEncounter","Id":  "1", "PatientId": "88", "PatientEncounterDetailId":  "22", "DatePerformed": "2012-01-31",
+      "PatientEncounterDetail" : {"Id":  "22", "ProviderNPI":  "123456789"},
+      "PatientEncounterDiagnosis": [
+        {
+          "Id":  "22", "PatientEncounterId": "1", "Code":  "ICD9:250.02",
+          "PatientEncounterDiagnosisDetail" : [
+            {"Id":  "33", "PatientEncounterDiagnosisId":  "22", "Description":  "Diabetes - with hyperglycemia"}
+          ]
+        },
+        {
+          "Id":  "2", "PatientEncounterId": "1", "Code":  "ICD9:250.01",
+          "PatientEncounterDiagnosisDetail" : [
+            {"Id":  "3", "PatientEncounterDiagnosisId":  "2", "Description":  "Diabetes - no complications"},
+            {"Id":  "4", "PatientEncounterDiagnosisId":  "2", "Description":  "Diabetes - no complications indeed"}
+          ]
+        }
+      ]
+    },
+
+    {
+      "Root": "PatientEncounter","Id":  "1", "PatientId": "88", "PatientEncounterDetailId":  "22", "DatePerformed": "2012-01-31",
+      "PatientEncounterDetail" : {"Id":  "22", "ProviderNPI":  "123456789"},
+      "PatientEncounterDiagnosis": [
+        {
+          "Id":  "22", "PatientEncounterId": "1", "Code":  "ICD9:250.02",
+          "PatientEncounterDiagnosisDetail" : [
+            {"Id":  "33", "PatientEncounterDiagnosisId":  "22", "Description":  "Diabetes - with hyperglycemia - UPDATED"}
+          ]
+        },
+        {
+          "Id":  "2", "PatientEncounterId": "1", "Code":  "ICD9:250.01",
+          "PatientEncounterDiagnosisDetail" : [
+            {"Id":  "3", "PatientEncounterDiagnosisId":  "2", "Description":  "Diabetes - no complications"},
+            {"Id":  "4", "PatientEncounterDiagnosisId":  "2", "Description":  "Diabetes - no complications indeed"}
+          ]
+        }
+      ]
+    }
+
+  ]
+}
