@@ -1,32 +1,26 @@
 {
   "inputRecords": [
 
-    /* create #1 - root comes first - three aggs from the snowflake*/
     {"event": {"pk": ["Id=1"], "table":  "Patient"}, "stateRecord": {"Id":  "1", "FirstName":  "Jay"}},
     {"event": {"pk": ["Id=2"], "table":  "ContactInfo"}, "stateRecord": {"Id":  "2", "PatientId": "1", "Phone":  "123-45678"}},
     {"event": {"pk": ["Id=3"], "table":  "Address"}, "stateRecord": {"Id":  "3", "PersonId":  "1", "Discriminator":  "Patient", "City":  "Paris"}},
 
-    /* create #2 - root comes last : one agg from the snowflake */
     {"event": {"pk": ["Id=234"], "table":  "Address"}, "stateRecord": {"Id":  "234", "PersonId":  "123", "Discriminator":  "Patient", "City":  "Paris"}},
     {"event": {"pk": ["Id=345"], "table":  "ContactInfo"}, "stateRecord": {"Id":  "345", "PatientId": "123", "Phone":  "123-45678"}},
     {"event": {"pk": ["Id=123"], "table":  "Patient"}, "stateRecord": {"Id":  "123", "FirstName":  "Sam"}},
 
-    /* update #2 */
     {"event": {"pk": ["Id=345"], "table":  "ContactInfo"}, "stateRecord": {"Id":  "345", "PatientId": "123", "Phone":  "123-45678", "Email":  "a@b.com"}},
     {"event": {"pk": ["Id=123"], "table":  "Patient"}, "stateRecord": {"Id":  "123", "FirstName":  "Jack"}},
     {"event": {"pk": ["Id=234"], "table":  "Address"}, "stateRecord": {"Id":  "234", "PersonId":  "123", "Discriminator":  "Patient", "City": "Nice"}}
   ],
   "expectedOutput": [
 
-    /* create #1 events */
     {"Root": "Patient", "Id": "1", "FirstName": "Jay"},
     {"Root": "Patient", "Id": "1", "FirstName": "Jay", "ContactInfo": {"Id":  "2", "PatientId": "1", "Phone": "123-45678"}},
     {"Root": "Patient", "Id": "1", "FirstName": "Jay", "ContactInfo": {"Id":  "2", "PatientId": "1", "Phone": "123-45678"}, "Address": {"Id":  "3", "PersonId":  "1", "Discriminator":  "Patient", "City": "Paris"}},
 
-    /* create #2 event */
     {"Root": "Patient", "Id": "123", "FirstName": "Sam", "Address": {"Id":  "234", "PersonId":  "123", "Discriminator":  "Patient","City": "Paris"}, "ContactInfo": {"Id":  "345", "PatientId": "123", "Phone": "123-45678"}},
 
-    /* update #2 events */
     {"Root": "Patient", "Id": "123", "FirstName": "Sam",  "Address": {"Id": "234", "PersonId":  "123", "Discriminator":  "Patient", "City": "Paris"}, "ContactInfo": {"Id":  "345", "PatientId": "123", "Phone": "123-45678", "Email":  "a@b.com"}},
     {"Root": "Patient", "Id": "123", "FirstName": "Jack", "Address": {"Id": "234", "PersonId":  "123", "Discriminator":  "Patient", "City": "Paris"}, "ContactInfo": {"Id":  "345", "PatientId": "123", "Phone": "123-45678", "Email":  "a@b.com"}},
     {"Root": "Patient", "Id": "123", "FirstName": "Jack", "Address": {"Id": "234", "PersonId":  "123", "Discriminator":  "Patient", "City": "Nice"}, "ContactInfo": {"Id":  "345", "PatientId": "123", "Phone": "123-45678", "Email":  "a@b.com"}}

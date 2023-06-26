@@ -9,10 +9,8 @@
     {"event": {"pk": ["DictionaryName1=CPT", "Code1=99021", "DictionaryName2=ICD9", "Code2=250.02"], "table":  "DictionaryEntryMapping"}, "stateRecord": {"DictionaryName1": "CPT", "Code1": "99021", "DictionaryName2": "ICD9", "Code2": "250.02"}},
     {"event": {"pk": ["DictionaryName1=CVX", "Code1=123", "DictionaryName2=CPT", "Code2=99021"], "table":  "DictionaryEntryMapping"}, "stateRecord": {"DictionaryName1": "CVX", "Code1": "123", "DictionaryName2": "CPT", "Code2": "99021"}},
     {"event": {"pk": ["DictionaryName1=CVX", "Code1=456", "DictionaryName2=CPT", "Code2=99021"], "table":  "DictionaryEntryMapping"}, "stateRecord": {"DictionaryName1": "CVX", "Code1": "456", "DictionaryName2": "CPT", "Code2": "99021"}},
-    /* ROOT - one event shall be created */
     {"event": {"pk": ["DictionaryName=CPT", "Code=99021"], "table":  "DictionaryEntry"}, "stateRecord": {"DictionaryName": "CPT", "Code": "99021", "Description":  "Visit for Diabetes Check"}},
     {"event": {"pk": ["DictionaryName=CPT", "Code=99022"], "table":  "DictionaryEntry"}, "stateRecord": {"DictionaryName": "CPT", "Code": "99022", "Description":  "Visit for Diabetes Check for Pregnant women"}},
-    /* updates TWO aggregates thus sends out two root records */
     {"event": {"pk": ["Id=3"], "table":  "Application"}, "stateRecord": {"Id":  "3", "Name":  "WHN-New Location"}},
 
     {"event": {"pk": ["DictionaryName1=CVX", "Code1=124", "DictionaryName2=CPT", "Code2=99021"], "table":  "DictionaryEntryMapping"}, "stateRecord": {"DictionaryName1": "CVX", "Code1": "124", "DictionaryName2": "CPT", "Code2": "99021"}}
