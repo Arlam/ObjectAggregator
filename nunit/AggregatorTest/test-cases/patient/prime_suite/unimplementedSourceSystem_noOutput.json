@@ -1,6 +1,0 @@
-{
-  "inputRecords": [
-    {"event": {"pk": ["Id=1"], "table":  "Patient"}, "stateRecord": {"Id":  "1", "FirstName":  "Jay"}}
-  ],
-  "expectedOutput": []
-}

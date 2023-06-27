@@ -1,20 +1,15 @@
 {
   "inputRecords": [
-    /* first - init */
     {"event": {"pk": ["Id=2"], "table":  "Address"}, "stateRecord": {"Id":  "2", "PersonId":  "1", "Discriminator":  "Patient", "City":  "Paris"}},
     {"event": {"pk": ["Id=1"], "table":  "Patient"}, "stateRecord": {"Id":  "1", "FirstName":  "Jay"}},
 
-    /* wrong discriminator update - even though PersonId matches - NO EVENTS */
     {"event": {"pk": ["Id=3"], "table":  "Address"}, "stateRecord": {"Id":  "3", "PersonId":  "1", "Discriminator":  "Physician", "City":  "Munich"}},
 
-    /* proper update - correct discriminator */
     {"event": {"pk": ["Id=2"], "table":  "Address"}, "stateRecord": {"Id":  "2", "PersonId":  "1", "Discriminator":  "Patient", "City":  "Milan"}}
   ],
   "expectedOutput": [
-    /* event from initial create */
     {"Root": "Patient", "Id": "1", "FirstName": "Jay", "Address": {"Id": "2", "PersonId":  "1", "Discriminator":  "Patient","City": "Paris"}},
 
-    /* proper update event */
     {"Root": "Patient", "Id": "1", "FirstName": "Jay", "Address": {"Id": "2", "PersonId":  "1", "Discriminator":  "Patient","City": "Milan"}}
   ]
 }

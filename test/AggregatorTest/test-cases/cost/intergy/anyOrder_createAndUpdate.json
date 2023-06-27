@@ -3,10 +3,8 @@
     {"event": {"pk": ["Id=1"], "table":  "PatientEncounter"}, "stateRecord": {"Id":  "1", "PatientId":  "34", "Code": "99023", "DatePerformed":  "2022-02-12", "PatientEncounterDetailId":  "12"}},
     {"event": {"pk": ["Id=1"], "table":  "PatientLab"}, "stateRecord": {"Id":  "1", "Code": "1234-5", "Value":  "23", "PatientLabDetailId":  "2"}},
     {"event": {"pk": ["Id=2"], "table":  "PatientLabDetail"}, "stateRecord": {"Id":  "2", "ClinicId": "23"}},
-    /* ROOT - one event shall be created */
     {"event": {"pk": ["Id=4"], "table":  "CostRecord"}, "stateRecord": {"id":  "4", "PatientId":  "34", "Discriminator": "encounter", "DomainRecordId": "1"}},
     {"event": {"pk": ["Id=5"], "table":  "CostRecord"}, "stateRecord": {"Id":  "5", "PatientId":  "34", "Discriminator": "lab", "DomainRecordId": "1"}},
-    /* simple update in the depth */
     {"event": {"pk": ["Id=2"], "table":  "PatientLabDetail"}, "stateRecord": {"Id":  "2", "ClinicId": "24"}}
   ],
   "expectedOutput": [
