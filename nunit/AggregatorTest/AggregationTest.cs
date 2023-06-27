@@ -30,12 +30,14 @@ public class AggregationTest
         FileInfo[] files = dir.GetFiles("*.json", System.IO.SearchOption.AllDirectories);
         foreach (FileInfo file in files)
         {
-            yield return new TestCaseData(file);
+            var testCase = new TestCaseData(file);
+            testCase.SetArgDisplayNames(file.Name);
+            yield return testCase;
         }
     }
 
     [Test, TestCaseSource("GetTestCaseDatas")]
-    public void Test1(FileInfo fileInfo)
+    public void TestAggregate(FileInfo fileInfo)
     {
         var names = fileInfo.FullName.Split("/");
         var sourceSystem = names[names.Length - 2];

@@ -57,7 +57,8 @@ public class LocalStorage : IStorage
     {
         foreach (Key column in columns)
         {
-            var same = column.value.Equals(row.Data[column.columnName]);
+            var columnExists = row.Data.ContainsKey(column.columnName);
+            var same = columnExists && column.value.Equals(row.Data[column.columnName]);
             if (!same)
             {
                 return false;
