@@ -1,0 +1,33 @@
+{
+    "name": "Patient",
+    "oneToOne": [
+        {
+            "name": "Address",
+            "conditions": [
+                {
+                    "type": "fk",
+                    "criteria": {
+                        "patientId": "id"
+                    }
+                },
+                {
+                    "type": "constant",
+                    "criteria": {
+                        "type": "HOME"
+                    }
+                }
+            ],
+            "parent": {
+                "name": "Patient",
+                "conditions": [
+                    {
+                        "type": "fk",
+                        "criteria": {
+                            "id": "patientId"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

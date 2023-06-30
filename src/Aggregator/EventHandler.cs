@@ -16,4 +16,14 @@ public class EventHandler
     {
         this._output.Publish(new RootAggregate(), evntObj.Client);
     }
+
+    private List<Table> CreateTables()
+    {
+        var tables = new List<Table>();
+
+        Table.Of("Patient");
+        
+
+        return tables;
+    }
 }

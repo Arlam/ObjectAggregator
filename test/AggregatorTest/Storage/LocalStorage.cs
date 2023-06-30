@@ -57,8 +57,8 @@ public class LocalStorage : IStorage
     {
         foreach (Key column in columns)
         {
-            var columnExists = row.Data.ContainsKey(column.columnName);
-            var same = columnExists && column.value.Equals(row.Data[column.columnName]);
+            var columnExists = row.Data.ContainsKey(column.ColumnName);
+            var same = columnExists && column.Value.Equals(row.Data[column.ColumnName]);
             if (!same)
             {
                 return false;
@@ -69,6 +69,17 @@ public class LocalStorage : IStorage
 
     public List<Row> FindRows(RowLocator locator, Client client)
     {
-        return this._cache[client.sourceSystem.Name][locator.TableName];
+        return this._cache[client.sourceSystem.Name][locator.TableName].FindAll(row =>
+        {
+            var isEqual = true;
+            locator.Keys.ForEach(key =>
+            {
+                if (!row.Data[key.ColumnName].Equals(key.Value))
+                {
+                    isEqual = false;
+                }
+            });
+            return isEqual;
+        });
     }
 }
