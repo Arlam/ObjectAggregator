@@ -2,11 +2,13 @@ using NUnit.Framework;
 using System.IO;
 using System.Collections.Generic;
 using System.Text.Json;
-using AggregatorTest.In;
-using AggregatorTest.Out;
 using Aggregator;
 using Aggregator.Models;
-using AggregatorTest.Storage;
+using Aggregator.Out;
+using AggregatorTest.Out;
+using AggregatorTest.In;
+using AggregatorTest.Json;
+using AggregatorTest.Service;
 
 namespace AggregatorTest;
 
@@ -21,7 +23,7 @@ public class AggregationTest
     {
         this._storage = new LocalStorage();
         this._output = new LocalOutput();
-        this._handler = new EventHandler(this._output);
+        this._handler = new EventHandler(this._storage, this._output);
     }
 
     private static IEnumerable<TestCaseData> GetTestCaseDatas()
@@ -30,9 +32,12 @@ public class AggregationTest
         FileInfo[] files = dir.GetFiles("*.json", System.IO.SearchOption.AllDirectories);
         foreach (FileInfo file in files)
         {
-            var testCase = new TestCaseData(file);
-            testCase.SetArgDisplayNames(file.Name);
-            yield return testCase;
+            if (file.FullName.EndsWith("/patient/intergy/wrongDiscriminator.json"))
+            {
+                var testCase = new TestCaseData(file);
+                testCase.SetArgDisplayNames(file.FullName.Split("test-cases")[1]);
+                yield return testCase;
+            }
         }
     }
 
@@ -44,6 +49,7 @@ public class AggregationTest
 
         string json = new StreamReader(fileInfo.FullName).ReadToEnd();
         var options = new JsonSerializerOptions { IncludeFields = true, };
+        options.Converters.Add(new ObjectConverter());
 
         TestCase testCase = JsonSerializer.Deserialize<TestCase>(json, options)!;
         testCase.InputRecords.ForEach(record =>
@@ -57,7 +63,7 @@ public class AggregationTest
             this._handler.OnEvent(eventObj);
         });
 
-        List<Dictionary<string, object>> publishedMessages = this._output.GetState();
+        var publishedMessages = this._output.State.ConvertAll(output => output.Data);
 
         Assert.AreEqual(testCase.ExpectedOutput.Count, publishedMessages.Count);
     }

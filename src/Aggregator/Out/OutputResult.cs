@@ -2,15 +2,12 @@ namespace Aggregator.Out;
 
 public class OutputResult
 {
-    private Dictionary<string, object> _data { get; }
+    public Dictionary<string, object> Data { get; }
 
-    public OutputResult(Dictionary<string, object> data)
+    public OutputResult(string root, Dictionary<string, object> data)
     {
-        this._data = data;
+        this.Data = data;
+        this.Data.Add("Root", root);
     }
 
-    public Dictionary<string, object> GetData()
-    {
-        return this._data;
-    }
 }

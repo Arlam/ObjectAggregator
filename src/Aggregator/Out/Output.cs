@@ -4,5 +4,5 @@ namespace Aggregator.Out;
 
 public interface Output
 {
-    void Publish(RootAggregate agg, Client client);
+    void Publish(OutputResult agg, Client client);
 }

@@ -1,3 +1,3 @@
 namespace Aggregator.Models;
 
-public record Event(RowLocator PK, Client Client);
+public record Event(RowLocator Locator, Client Client);

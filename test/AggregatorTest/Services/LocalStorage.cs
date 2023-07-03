@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 using Aggregator;
 using Aggregator.Models;
 
-namespace AggregatorTest.Storage;
+namespace AggregatorTest.Service;
 
 public class LocalStorage : IStorage
 {
@@ -69,7 +68,16 @@ public class LocalStorage : IStorage
 
     public List<Row> FindRows(RowLocator locator, Client client)
     {
-        return this._cache[client.sourceSystem.Name][locator.TableName].FindAll(row =>
+        if (!this._cache.ContainsKey(client.sourceSystem.Name))
+        {
+            return new List<Row>();
+        }
+        var tables = this._cache[client.sourceSystem.Name];
+        if (!tables.ContainsKey(locator.TableName))
+        {
+            return new List<Row>();
+        }
+        return tables[locator.TableName].FindAll(row =>
         {
             var isEqual = true;
             locator.Keys.ForEach(key =>

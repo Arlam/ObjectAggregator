@@ -6,7 +6,10 @@ public class ObjectResolver
 {
     private readonly IStorage _storage;
 
-    public ObjectResolver(IStorage storage) { }
+    public ObjectResolver(IStorage storage)
+    {
+        this._storage = storage;
+    }
 
     public List<Row> FindAll(RowLocator locator, Table table)
     {
@@ -20,7 +23,7 @@ public class ObjectResolver
     {
         var parentTableName = "";
         var keys = new List<Key>();
-        
+
         RowLocator rowLocator = new RowLocator(parentTableName, keys);
         return rowLocator;
     }
