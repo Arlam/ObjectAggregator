@@ -5,7 +5,7 @@ namespace Aggregator.Models;
 public class Table
 {
     public string Name { get; }
-    public string _alias;
+    private string _alias;
     public List<Table> OneToOne { get; } = new List<Table>();
     public List<Table> OneToMany { get; } = new List<Table>();
     public Join Join { get; set; }

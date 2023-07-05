@@ -31,6 +31,8 @@ public class ConstatntValueResolver : IValueResolver
         this._constatnt = constatnt;
     }
 
+    //TODO: taking unneeded row is not good idea. Has to be changed somehow 
+
     public object GetValue(Row row)
     {
         return this._constatnt;

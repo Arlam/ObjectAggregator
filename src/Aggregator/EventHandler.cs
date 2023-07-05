@@ -2,8 +2,8 @@ namespace Aggregator;
 
 using System;
 using System.Collections.Generic;
-using Aggregator;
 using Aggregator.Services;
+using Aggregator.Relations;
 using Aggregator.Models;
 using Aggregator.Out;
 using static Aggregator.Relations.Condition;
@@ -34,12 +34,35 @@ public class EventHandler
 
         this.GetSchemas(client)
             .SelectMany(schema => this.GetAffectedTables(schema, tableName))
-            .SelectMany(table => this._aggregatorService.FindRootObjects(locator, table, client))
+            .SelectMany(
+                table =>
+                    this._aggregatorService.FindRootObjects(
+                        EnrichLocatorWithConstantsConditions(locator, table),
+                        table,
+                        client
+                    )
+            )
             .ToList()
             .ConvertAll(
                 pair => this._aggregatorService.AggregateOutput(pair.Item2, pair.Item1, client)
             )
             .ForEach(result => this._output.Publish(result, client));
+    }
+
+    private RowLocator EnrichLocatorWithConstantsConditions(RowLocator locator, Table table)
+    {
+        if (table.Join == null)
+        {
+            return locator;
+        }
+        foreach (KeyValuePair<string, IValueResolver> entry in table.Join.ThisTableDefinition)
+        {
+            if (entry.Value.GetType() == typeof(ConstatntValueResolver))
+            {
+                locator.Keys.Add(new Key(entry.Key, entry.Value.GetValue(null)));
+            }
+        }
+        return locator;
     }
 
     private List<Table> GetSchemas(Client client)

@@ -32,7 +32,7 @@ public class AggregationTest
         FileInfo[] files = dir.GetFiles("*.json", System.IO.SearchOption.AllDirectories);
         foreach (FileInfo file in files)
         {
-            if (file.FullName.EndsWith("/patient/intergy/wrongDiscriminator.json"))
+            // if (file.FullName.EndsWith("/patient/intergy/wrongDiscriminator.json"))
             {
                 var testCase = new TestCaseData(file);
                 testCase.SetArgDisplayNames(file.FullName.Split("test-cases")[1]);
