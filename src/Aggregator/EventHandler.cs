@@ -32,7 +32,7 @@ public class EventHandler
         var updatedRow = this._storage.FindRow(locator, client);
         var tableName = evntObj.Locator.TableName;
 
-        this.GetTables(client)
+        this.GetSchemas(client)
             .SelectMany(schema => this.GetAffectedTables(schema, tableName))
             .SelectMany(table => this._aggregatorService.FindRootObjects(locator, table, client))
             .ToList()
@@ -42,7 +42,7 @@ public class EventHandler
             .ForEach(result => this._output.Publish(result, client));
     }
 
-    private List<Table> GetTables(Client client)
+    private List<Table> GetSchemas(Client client)
     {
         if (this._tables.ContainsKey(client.sourceSystem.Name))
         {
